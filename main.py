@@ -44,17 +44,20 @@ ballX_change = 0
 ballY_change = 0
 
 #Score and Text
-font = pygame.font.Font('freesansbold.ttf', 32)
-
-textX = 10
-textY = 10
-
-# def show_score(x,y):
-#     score = font.pygame.font.render(text, antialias, color, background=None)
-
-
 player1_score = 0
 player2_score = 0
+font = pygame.font.Font('freesansbold.ttf', 32)
+
+textX_1 = 10
+textY_1 = 10
+textX_2 = 10
+textY_2 = 550
+
+
+def show_score(player_score, x, y):
+    score1 = font.render("Score : " + str(player_score),
+                         True, (255, 255, 255))
+    screen.blit(score1, (x, y))
 
 # Draw game elements to screen
 
@@ -132,6 +135,8 @@ while running:
     player(player1_img, player1_X, player1_Y)
     player(player2_img, player2_X, player2_Y)
     ball(ballX, ballY)
+    show_score(player1_score, textX_1, textY_1)
+    show_score(player2_score, textX_2, textY_2)
 
 # Updating movement
     player1_X += player1_X_change
@@ -188,5 +193,14 @@ while running:
         ballX_change *= -1
     elif ballX >= 750:
         ballX_change *= -1
+
+    # # Checking for game over & Reset Game
+    # if player1_score == 3 or player2_score == 3:
+    #     player1_score = 0
+    #     player2_score = 0
+    #     ballX = ballX_start
+    #     ballY = ballY_start
+    #     player1_X = 385
+    #     player2_X = 385
 
     pygame.display.update()
