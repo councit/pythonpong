@@ -1,5 +1,6 @@
 import pygame
 import math
+from random import randint, random
 
 # Initialise pygame
 pygame.init()
@@ -33,10 +34,11 @@ player2_X_change = 0
 # Ball Image
 ballImg = pygame.image.load('block.png')
 
-ball_start = 290
+ballY_start = 290
+ballX_start = 385
 
-ballX = 385
-ballY = ball_start
+ballX = ballX_start
+ballY = ballY_start
 
 ballX_change = 0
 ballY_change = 0
@@ -135,16 +137,20 @@ while running:
     player1_X += player1_X_change
     player2_X += player2_X_change
     ballY += ballY_change
+    ballX += ballX_change
 
 # Collition
     collision_player1 = isCollision_1(player1_X, player1_Y, ballX, ballY)
     if collision_player1:
         ballY_change *= -1
+        ballX_change += random()
+
         print('collition')
 
     collision_player2 = isCollision_2(player2_X, player2_Y, ballX, ballY)
     if collision_player2:
         ballY_change *= -1
+        ballX_change += random()
         print('collition')
 
 # Giving objects boundries
@@ -159,18 +165,28 @@ while running:
     elif player2_X >= 700:
         player2_X = 700
 
-    # Ball
+    # Ball Y Boundires
     if ballY <= -50:
-        ballY = ball_start
+        ballY = ballY_start
+        ballX = ballX_start
         ballY_change = 0
+        ballX_change = 0
 
         player2_score += 1
         print("Player 2 Score: " + str(player2_score))
     elif ballY > 600:
-        ballY = ball_start
+        ballY = ballY_start
+        ballX = ballX_start
         ballY_change = 0
+        ballX_change = 0
 
         player1_score += 1
         print("Player 1 Score: " + str(player1_score))
+
+    # Ball X Boundries
+    if ballX <= 0:
+        ballX_change *= -1
+    elif ballX >= 750:
+        ballX_change *= -1
 
     pygame.display.update()
